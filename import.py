@@ -1,8 +1,13 @@
 # check if a module is installed. If not, install it and then import it again
+import logging
 try:
-    from zk import ZK
+    from getkey import getkey, key
+    logging.info('getkey imported properly!')
 except:
-    import sys
-    import subprocess
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pyzk'])
-    from zk import ZK
+    try:
+        import subprocess
+        subprocess.run(['pip', 'install', 'getkey'])
+        from getkey import getkey, key
+        logging.info('getkey imported after installation!')
+    except Exception as e:
+        logging.error(f'import getkey error:{e}')
