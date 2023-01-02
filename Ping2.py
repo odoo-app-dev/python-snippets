@@ -17,7 +17,9 @@ def ping_test(ip='8.8.8.8'):
 
     res = out.find(' 0% packet loss') > 0 if linux else out.find('Received = 1') > 0
     if res:
+        # todo: 'ms' must be taken from the result.
         if linux:
+            # todo: make sure 'max/mdev' and '/' are in all linux's
             time_index = out.find('max/mdev = ') + 11
             res = ip + ',' + str(round(float(out[time_index: time_index + 15].split('/')[0]), 2)) + ',ms'
         else:
@@ -27,3 +29,5 @@ def ping_test(ip='8.8.8.8'):
     return res
   
 # ping_test('amazon.com') -> 'amazon.com,172,ms'
+# ping_test() -> '8.8.8.8,41,ms'
+# ping_test('172.16.0.1') -> False
